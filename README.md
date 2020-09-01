@@ -30,8 +30,8 @@ Heavily inspired from [Egghead.io - How to Write an Open Source JavaScript Libra
 Clone the repo:
 
 ```sh
-git clone git@github.com:kunalkapadia/express-mongoose-es6-rest-api.git
-cd express-mongoose-es6-rest-api
+git https://github.com/haleyhuynh/gomble-backend
+cd gomble-backend
 ```
 
 Install yarn:
