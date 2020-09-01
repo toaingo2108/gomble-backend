@@ -1,23 +1,23 @@
-const express = require('express');
-const logger = require('morgan');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const compress = require('compression');
-const methodOverride = require('method-override');
-const cors = require('cors');
-const httpStatus = require('http-status');
-const expressWinston = require('express-winston');
-const expressValidation = require('express-validation');
-const helmet = require('helmet');
-const winstonInstance = require('./winston');
-const routes = require('../index.route');
-const config = require('./config');
-const APIError = require('../server/helpers/APIError');
+const express = require("express");
+const logger = require("morgan");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const compress = require("compression");
+const methodOverride = require("method-override");
+const cors = require("cors");
+const httpStatus = require("http-status");
+const expressWinston = require("express-winston");
+const expressValidation = require("express-validation");
+const helmet = require("helmet");
+const winstonInstance = require("./winston");
+const routes = require("../index.route");
+const config = require("./config");
+const APIError = require("../server/helpers/APIError");
 
 const app = express();
 
-if (config.env === 'development') {
-  app.use(logger('dev'));
+if (config.env === "development") {
+  app.use(logger("dev"));
 }
 
 // parse body params and attache them to req.body
