@@ -176,7 +176,7 @@ Contributions, questions and comments are all welcome and encouraged. For code c
 
 ## License
 
-This project is licensed under the [MIT License](https://github.com/haleyhuynh/gomble-backend/master/LICENSE)
+This project is licensed under the [MIT License](https://github.com/haleyhuynh/gomble-backend/blob/master/LICENSE)
 
 ## Meta
 
