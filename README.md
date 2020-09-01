@@ -180,4 +180,4 @@ This project is licensed under the [MIT License](https://github.com/haleyhuynh/g
 
 ## Meta
 
-Kunal Kapadia – [@kunalkapadia12](https://twitter.com/kunalkapadia12) – kunalkapadia12@gmail.com
+Haley Huynh – [@haleyhuynh](https://github.com/haleyhuynh) – haleyhtnt1122@gmail.com
