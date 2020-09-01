@@ -176,13 +176,7 @@ Contributions, questions and comments are all welcome and encouraged. For code c
 
 ## License
 
-This project is licensed under the [MIT License](https://github.com/kunalkapadia/express-mongoose-es6-rest-api/blob/master/LICENSE)
-
-## Support Development
-
-If this project saved your valuable time in getting your service up, and you feel like buying me coffee, you can donate either at my BTC address: `1LkW5UoERR1jjJsChMheKuo6vn95x2mzWg` or at [![Support via Paypal](https://img.shields.io/badge/support-paypal-yellowgreen.svg?style=flat-square)](https://www.paypal.me/KunalKapadia)
-
-Your support is greatly appreciated.
+This project is licensed under the [MIT License](https://github.com/haleyhuynh/gomble-backend/master/LICENSE)
 
 ## Meta
 
