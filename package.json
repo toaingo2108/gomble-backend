@@ -1,8 +1,8 @@
 {
-  "name": "express-mongoose-es6-rest-api",
-  "version": "5.0.0",
-  "description": "A Boilerplate application for building REST APIs using express, mongoose in ES6 with code coverage",
-  "author": "Kunal Kapadia <kunalkapadia12@gmail.com>",
+  "name": "gomble-backend-api",
+  "version": "1.0.0",
+  "description": "Gomble Backend application for building REST APIs using express, mongoose in ES6 with code coverage",
+  "author": "Haley Huynh <haleyhtnt1122@gmail.com>",
   "main": "index.js",
   "private": false,
   "engines": {
@@ -11,7 +11,7 @@
     "yarn": ">=1.5.1"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon index.js",
     "start:debug": "cross-env DEBUG=express-mongoose-es6-rest-api:* yarn start",
     "lint": "esw *.js server config --color",
     "lint:watch": "yarn lint -- --watch",
@@ -37,7 +37,7 @@
     "istanbul",
     "REST",
     "API",
-    "boilerplate"
+    "gomble"
   ],
   "dependencies": {
     "bluebird": "3.5.1",
@@ -56,8 +56,9 @@
     "joi": "10.6.0",
     "jsonwebtoken": "7.1.9",
     "method-override": "^2.3.10",
-    "mongoose": "4.7.4",
+    "mongoose": "^5.7.5",
     "morgan": "1.9.0",
+    "nodemon": "false2.0.4",
     "winston": "2.4.1"
   },
   "devDependencies": {
