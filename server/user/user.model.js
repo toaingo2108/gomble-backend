@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    default: "customer",
+    default: "-",
   },
   is_facebook: Boolean,
   is_apple: Boolean,
