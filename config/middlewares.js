@@ -11,13 +11,15 @@ module.exports = function auth(req, res, next) {
       if (err) {
         return res
           .status(401)
-          .json({ success: false, msg: "Failed to authenticate token." });
+          .json({ success: false, message: "Failed to authenticate token." });
       } else {
         req.decoded = decoded;
         return next();
       }
     });
   } else {
-    return res.status(401).json({ success: false, msg: "No token provided." });
+    return res
+      .status(401)
+      .json({ success: false, message: "No token provided." });
   }
 };
