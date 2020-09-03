@@ -1,13 +1,9 @@
-const jwt = require('jsonwebtoken');
-const httpStatus = require('http-status');
-const APIError = require('../helpers/APIError');
-const config = require('../../config/config');
-
-// sample user, used for authentication
-const user = {
-  username: 'react',
-  password: 'express'
-};
+const jwt = require("jsonwebtoken");
+const httpStatus = require("http-status");
+const APIError = require("../helpers/APIError");
+const config = require("../../config/config");
+const User = require("../user/user.model");
+const bcrypt = require("bcryptjs");
 
 /**
  * Returns jwt token if valid username and password is provided
@@ -16,21 +12,97 @@ const user = {
  * @param next
  * @returns {*}
  */
-function login(req, res, next) {
-  // Ideally you'll fetch this from the db
-  // Idea here was to show how jwt works with simplicity
-  if (req.body.username === user.username && req.body.password === user.password) {
-    const token = jwt.sign({
-      username: user.username
-    }, config.jwtSecret);
-    return res.json({
-      token,
-      username: user.username
+async function login(req, res) {
+  const email = req.body.email;
+  const password = req.body.password;
+  if (!email) {
+    return res.status(400).json({
+      success: false,
+      message: "Email is required",
+    });
+  }
+  if (!password) {
+    return res.status(400).json({
+      success: false,
+      message: "password is required",
     });
   }
 
-  const err = new APIError('Authentication error', httpStatus.UNAUTHORIZED, true);
-  return next(err);
+  try {
+    let user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+      });
+    } else {
+      let isMatch = await bcrypt.compare(password, user.password);
+
+      if (isMatch) {
+        const payload = {
+          id: user.id,
+          email: user.email,
+        };
+        let token = jwt.sign(payload, config.jwtSecret, {
+          expiresIn: 31556926, // 1 year in seconds
+        });
+        return res.status(200).json({
+          success: true,
+          token: "Bearer " + token,
+        });
+      } else {
+        return res.status(400).json({
+          success: false,
+          message: "Password incorrect",
+          password: "Password incorrect",
+        });
+      }
+    }
+  } catch (err) {
+    return res.status(500).json({ success: false, message: `err: ${err}` });
+  }
+}
+
+async function register(req, res) {
+  let email = req.body.email;
+  let password = req.body.password;
+  if (!email) {
+    return res.status(400).json({
+      success: false,
+      message: "Email is required",
+    });
+  }
+  if (!password) {
+    return res.status(400).json({
+      success: false,
+      message: "password is required",
+    });
+  }
+
+  try {
+    let user = await User.findOne({ email: req.body.email });
+    if (user) {
+      return res.status(400).json({
+        success: false,
+        message: "Email already exists",
+      });
+    } else {
+      const newUser = new User({
+        email,
+        password,
+      });
+      let salt = await bcrypt.genSalt(10);
+      let hash = await bcrypt.hash(newUser.password, salt);
+      newUser.password = hash;
+      await newUser.save();
+      return res.status(200).json({
+        success: true,
+        message: "Registered successfully",
+      });
+    }
+  } catch (err) {
+    return res.status(500).json({ success: false, message: `err: ${err}` });
+  }
 }
 
 /**
@@ -43,8 +115,8 @@ function getRandomNumber(req, res) {
   // req.user is assigned by jwt middleware if valid token is provided
   return res.json({
     user: req.user,
-    num: Math.random() * 100
+    num: Math.random() * 100,
   });
 }
 
-module.exports = { login, getRandomNumber };
+module.exports = { login, getRandomNumber, register };
