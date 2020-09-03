@@ -1,80 +1,60 @@
-const User = require('./user.model');
+const User = require("./user.model");
 
-/**
- * Load user and append to req.
- */
-function load(req, res, next, id) {
-  User.get(id)
-    .then((user) => {
-      req.user = user; // eslint-disable-line no-param-reassign
-      return next();
-    })
-    .catch(e => next(e));
+async function setType(req, res) {
+  const type = req.body.type;
+  const _id = req.decoded._id;
+  if (!type) {
+    return res.status(400).json({
+      success: false,
+      message: "Type is required",
+    });
+  }
+
+  try {
+    var user = await User.findOne({ _id });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+      });
+    } else {
+      if (user.type == type) {
+        return res.status(400).json({
+          success: false,
+          message: "Nothing changed",
+        });
+      }
+      user.type = type;
+      await user.save();
+      return res.status(200).json({
+        success: true,
+        message: `Type changed to ${type}`,
+        type: type,
+      });
+    }
+  } catch (err) {
+    return res.status(500).json({ success: false, message: `err: ${err}` });
+  }
 }
 
-/**
- * Get user
- * @returns {User}
- */
-function get(req, res) {
-  return res.json(req.user);
+async function profile(req, res) {
+  const _id = req.decoded._id;
+  try {
+    var user = await User.findOne({ _id });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        res: user,
+      });
+    }
+  } catch (err) {
+    return res.status(500).json({ success: false, message: `err: ${err}` });
+  }
 }
 
-/**
- * Create new user
- * @property {string} req.body.username - The username of user.
- * @property {string} req.body.mobileNumber - The mobileNumber of user.
- * @returns {User}
- */
-function create(req, res, next) {
-  const user = new User({
-    username: req.body.username,
-    mobileNumber: req.body.mobileNumber
-  });
-
-  user.save()
-    .then(savedUser => res.json(savedUser))
-    .catch(e => next(e));
-}
-
-/**
- * Update existing user
- * @property {string} req.body.username - The username of user.
- * @property {string} req.body.mobileNumber - The mobileNumber of user.
- * @returns {User}
- */
-function update(req, res, next) {
-  const user = req.user;
-  user.username = req.body.username;
-  user.mobileNumber = req.body.mobileNumber;
-
-  user.save()
-    .then(savedUser => res.json(savedUser))
-    .catch(e => next(e));
-}
-
-/**
- * Get user list.
- * @property {number} req.query.skip - Number of users to be skipped.
- * @property {number} req.query.limit - Limit number of users to be returned.
- * @returns {User[]}
- */
-function list(req, res, next) {
-  const { limit = 50, skip = 0 } = req.query;
-  User.list({ limit, skip })
-    .then(users => res.json(users))
-    .catch(e => next(e));
-}
-
-/**
- * Delete user.
- * @returns {User}
- */
-function remove(req, res, next) {
-  const user = req.user;
-  user.remove()
-    .then(deletedUser => res.json(deletedUser))
-    .catch(e => next(e));
-}
-
-module.exports = { load, get, create, update, list, remove };
+module.exports = { setType, profile };

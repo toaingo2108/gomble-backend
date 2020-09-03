@@ -21,6 +21,10 @@ const UserSchema = new mongoose.Schema({
   },
   is_facebook: Boolean,
   is_apple: Boolean,
+  image: String,
+  nickname: {
+    type: String,
+  },
   first_name: {
     type: String,
   },

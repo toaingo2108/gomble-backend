@@ -40,7 +40,7 @@ async function login(req, res) {
 
       if (isMatch) {
         const payload = {
-          id: user.id,
+          _id: user._id,
           email: user.email,
         };
         let token = jwt.sign(payload, config.jwtSecret, {
@@ -49,7 +49,7 @@ async function login(req, res) {
         return res.status(200).json({
           success: true,
           token: "Bearer " + token,
-          type: user.type
+          type: user.type,
         });
       } else {
         return res.status(400).json({
