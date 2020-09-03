@@ -52,6 +52,12 @@ const UserSchema = new mongoose.Schema({
   phone: {
     type: String,
   },
+  website: {
+    type: String,
+  },
+  description: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

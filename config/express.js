@@ -1,6 +1,7 @@
 const express = require("express");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
+const fileUpload = require("express-fileupload");
 const cookieParser = require("cookie-parser");
 const compress = require("compression");
 const methodOverride = require("method-override");
@@ -21,8 +22,9 @@ if (config.env === "development") {
 }
 
 // parse body params and attache them to req.body
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(fileUpload());
 
 app.use(cookieParser());
 app.use(compress());
@@ -50,6 +52,7 @@ app.use(cors());
 // }
 
 // mount all routes on /api path
+app.use("/public", express.static("public"));
 app.use("/api", routes);
 
 // if error is not an instanceOf APIError, convert it.
