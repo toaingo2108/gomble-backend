@@ -2,6 +2,7 @@ const express = require("express");
 const auth = require("./config/middlewares");
 const userRoutes = require("./server/user/user.route");
 const authRoutes = require("./server/auth/auth.route");
+const folderRoutes = require("./server/folder/folder.route");
 const router = express.Router(); // eslint-disable-line new-cap
 
 // TODO: use glob to match *.route files
@@ -11,9 +12,9 @@ router.get("/health-check", (req, res) => res.send("OK"));
 
 // mount auth routes at /auth
 router.use("/auth", authRoutes);
+router.use(auth); //middleware to check auth token
 
-router.use(auth);
-// mount user routes at /users
 router.use("/users", userRoutes);
+router.use("/folders", folderRoutes);
 
 module.exports = router;
