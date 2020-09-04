@@ -59,6 +59,30 @@ async function profile(req, res) {
     return res.status(500).json({ success: false, message: `err: ${err}` });
   }
 }
+async function basicProfile(req, res) {
+  const _id = req.decoded._id;
+  try {
+    var user = await User.findOne({ _id });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        res: {
+          email: user.email,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          image: user.image,
+        },
+      });
+    }
+  } catch (err) {
+    return res.status(500).json({ success: false, message: `err: ${err}` });
+  }
+}
 async function updateProfile(req, res) {
   const _id = req.decoded._id;
   try {
@@ -104,6 +128,39 @@ async function updateProfile(req, res) {
         if (updateStr != "") updateStr += ", ";
         updateStr += "Phone";
         update.phone = req.body.phone;
+      }
+      if (req.body.street && req.body.street != user.street) {
+        if (updateStr != "") updateStr += ", ";
+        updateStr += "Street";
+        update.street = req.body.street;
+      }
+      if (
+        req.body.street_number &&
+        req.body.street_number != user.street_number
+      ) {
+        if (updateStr != "") updateStr += ", ";
+        updateStr += "Street number";
+        update.street_number = req.body.street_number;
+      }
+      if (req.body.apt && req.body.apt != user.apt) {
+        if (updateStr != "") updateStr += ", ";
+        updateStr += "apt";
+        update.apt = req.body.apt;
+      }
+      if (req.body.city && req.body.city != user.city) {
+        if (updateStr != "") updateStr += ", ";
+        updateStr += "City";
+        update.city = req.body.city;
+      }
+      if (req.body.country && req.body.country != user.country) {
+        if (updateStr != "") updateStr += ", ";
+        updateStr += "Country";
+        update.country = req.body.country;
+      }
+      if (req.body.zip && req.body.zip != user.zip) {
+        if (updateStr != "") updateStr += ", ";
+        updateStr += "Zip";
+        update.zip = req.body.zip;
       }
 
       var photo = "default.jpg";
@@ -196,4 +253,4 @@ fileUserProfileUpload = (user_id, photo) => {
     filename,
   };
 };
-module.exports = { setType, profile, updateProfile };
+module.exports = { setType, profile, updateProfile, basicProfile };

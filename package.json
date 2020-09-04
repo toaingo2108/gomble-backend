@@ -41,6 +41,7 @@
   ],
   "dependencies": {
     "@sendgrid/mail": "^7.0.0",
+    "axios": "false0.20.0",
     "bcryptjs": "false2.4.3",
     "bluebird": "3.5.1",
     "body-parser": "1.18.2",

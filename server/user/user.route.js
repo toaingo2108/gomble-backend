@@ -8,5 +8,6 @@ const router = express.Router(); // eslint-disable-line new-cap
 router.route("/set-type").post(userCtrl.setType);
 router.route("/profile").post(userCtrl.profile);
 router.route("/update-profile").post(userCtrl.updateProfile);
+router.route("/basic-profile").post(userCtrl.basicProfile);
 
 module.exports = router;
