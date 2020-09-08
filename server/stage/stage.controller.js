@@ -1,6 +1,6 @@
-const Folder = require("./folder.model");
+const Stage = require("./stage.model");
 
-async function getFolders(req, res) {
+async function getStage(req, res) {
   const _id = req.decoded._id;
 
   try {
@@ -46,4 +46,4 @@ async function createFolder(req, res) {
   }
 }
 
-module.exports = { getFolders, createFolder };
+module.exports = { getTechpacks, createFolder };

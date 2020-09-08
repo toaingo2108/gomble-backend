@@ -1,6 +1,6 @@
-const Folder = require("./folder.model");
+const Tag = require("./tag.model");
 
-async function getFolders(req, res) {
+async function getTags(req, res) {
   const _id = req.decoded._id;
 
   try {
@@ -46,4 +46,4 @@ async function createFolder(req, res) {
   }
 }
 
-module.exports = { getFolders, createFolder };
+module.exports = { getTechpacks, createFolder };

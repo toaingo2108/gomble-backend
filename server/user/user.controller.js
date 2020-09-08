@@ -83,6 +83,27 @@ async function basicProfile(req, res) {
     return res.status(500).json({ success: false, message: `err: ${err}` });
   }
 }
+async function type(req, res) {
+  const _id = req.decoded._id;
+  try {
+    var user = await User.findOne({ _id });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+      });
+    } else {
+      return res.status(200).json({
+        success: true,
+        res: {
+          type: user.type,
+        },
+      });
+    }
+  } catch (err) {
+    return res.status(500).json({ success: false, message: `err: ${err}` });
+  }
+}
 async function updateProfile(req, res) {
   const _id = req.decoded._id;
   try {
@@ -253,4 +274,4 @@ fileUserProfileUpload = (user_id, photo) => {
     filename,
   };
 };
-module.exports = { setType, profile, updateProfile, basicProfile };
+module.exports = { setType, profile, updateProfile, basicProfile, type };
