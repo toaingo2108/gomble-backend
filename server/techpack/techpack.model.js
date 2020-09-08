@@ -17,7 +17,7 @@ const TechpackSchema = new mongoose.Schema({
   },
   is_draft: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   createdAt: {
     type: Date,

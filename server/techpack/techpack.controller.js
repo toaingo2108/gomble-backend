@@ -1,8 +1,13 @@
 const Techpack = require("./techpack.model");
 
 async function getTechpacks(req, res) {
-  const folder_id = req.decoded.folder_id;
-
+  const folder_id = req.body.folder_id;
+  if (!folder_id) {
+    return res.status(400).json({
+      success: false,
+      message: "Folder id is required",
+    });
+  }
   try {
     var techpacks = await Techpack.find({ folder_id });
     return res.status(200).json({
@@ -14,9 +19,8 @@ async function getTechpacks(req, res) {
   }
 }
 
-async function createTechpack(req, res) {
-  const folder_id = req.decoded.folder_id;
-
+async function getDraft(req, res) {
+  const folder_id = req.body.folder_id;
   if (!folder_id) {
     return res.status(400).json({
       success: false,
@@ -24,17 +28,24 @@ async function createTechpack(req, res) {
     });
   }
   try {
-    var newFolder = new Folder({
+    var techpack = await Techpack.findOne({ folder_id, is_draft: true });
+    if (techpack) {
+      return res.status(400).json({
+        success: true,
+        res: techpack._id,
+      });
+    }
+    var newTechpack = new Techpack({
       folder_id,
     });
-    await newFolder.save();
+    newTechpack = await newTechpack.save();
     return res.status(200).json({
       success: true,
-      message: "new techpack creted successfully",
+      res: newTechpack._id,
     });
   } catch (err) {
     return res.status(500).json({ success: false, message: `err: ${err}` });
   }
 }
 
-module.exports = { getTechpacks, createTechpack };
+module.exports = { getTechpacks, getDraft };
