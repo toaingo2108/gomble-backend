@@ -1,9 +1,9 @@
 const express = require("express");
-const folderCtrl = require("./folder.controller");
+const stageCtrl = require("./stage.controller");
 
 const router = express.Router(); // eslint-disable-line new-cap
 
-router.route("/create").post(folderCtrl.createFolder);
-router.route("/").post(folderCtrl.getFolders);
+router.route("/update").post(stageCtrl.updateStage);
+router.route("/").post(stageCtrl.getStage);
 
 module.exports = router;

@@ -1,9 +1,9 @@
 const express = require("express");
-const folderCtrl = require("./folder.controller");
+const sketchCtrl = require("./sketch.controller");
 
 const router = express.Router(); // eslint-disable-line new-cap
 
-router.route("/create").post(folderCtrl.createFolder);
-router.route("/").post(folderCtrl.getFolders);
+router.route("/add").post(sketchCtrl.addSketch);
+router.route("/").post(sketchCtrl.getSketches);
 
 module.exports = router;

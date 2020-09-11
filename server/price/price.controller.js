@@ -1,7 +1,7 @@
-const Stage = require("./stage.model");
+const Price = require("./price.model");
 const Techpack = require("../techpack/techpack.model");
 
-async function getStage(req, res) {
+async function getPrice(req, res) {
   const _id = req.decoded._id;
 
   try {
@@ -15,48 +15,50 @@ async function getStage(req, res) {
   }
 }
 
-async function updateStage(req, res) {
+async function updatePrice(req, res) {
   const techpack_id = req.body.techpack_id;
-  const title = req.body.title;
-  const start_date = req.body.start_date;
-  const end_date = req.body.end_date;
-  const completion = req.body.completion;
+  const factory = req.body.factory;
+  const materials = req.body.materials;
+  const fee = req.body.fee;
+  const delivery = req.body.delivery;
+  const total = req.body.total;
   if (!techpack_id) {
     return res.status(400).json({
       success: false,
       message: "techpack id is required",
     });
   }
-  if (!title) {
+  if (!total) {
     return res.status(400).json({
       success: false,
-      message: "title is required",
+      message: "total price is required",
     });
   }
   try {
     var techpack = await Techpack.findOne({ _id: techpack_id });
-    var stage;
+    var price;
     if (!techpack) {
       return res.status(400).json({
         success: false,
         message: "Techpack not found",
       });
-    } else if (!techpack.stage) {
-      stage = new Stage();
+    } else if (!techpack.price) {
+      price = new Price();
     } else {
-      stage = await Stage.findOne({ _id: techpack.stage });
+      price = await Price.findOne({ _id: techpack.price });
     }
-    stage.techpack_id = techpack_id;
-    stage.title = title;
-    stage.start_date = start_date;
-    stage.end_date = end_date;
-    stage.completion = completion;
-    stage = await stage.save();
-    techpack.stage = stage._id;
+    price.techpack_id = techpack_id;
+    price.factory = factory;
+    price.materials = materials;
+    price.fee = fee;
+    price.delivery = delivery;
+    price.total = total;
+    price = await price.save();
+    techpack.price = price._id;
     await techpack.save();
     return res.status(200).json({
       success: true,
-      message: "stage saved successfully",
+      message: "price saved successfully",
     });
   } catch (err) {
     console.log(`${err}`);
@@ -64,4 +66,4 @@ async function updateStage(req, res) {
   }
 }
 
-module.exports = { getStage, updateStage };
+module.exports = { getPrice, updatePrice };

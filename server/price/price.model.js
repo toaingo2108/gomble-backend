@@ -4,24 +4,27 @@ const httpStatus = require("http-status");
 const APIError = require("../helpers/APIError");
 
 /**
- * Stage Schema
+ * Price Schema
  */
-const StageSchema = new mongoose.Schema({
+const PriceSchema = new mongoose.Schema({
   techpack_id: {
     type: mongoose.Schema.ObjectId,
     required: true,
   },
-  title: {
-    type: String,
-    required: true,
+  total: {
+    type: Number,
+    default: 0,
   },
-  start_date: {
-    type: String,
+  factory: {
+    type: Number,
   },
-  end_date: {
-    type: String,
+  fee: {
+    type: Number,
   },
-  completion: {
+  materials: {
+    type: Number,
+  },
+  delivery: {
     type: Number,
   },
 });
@@ -36,12 +39,12 @@ const StageSchema = new mongoose.Schema({
 /**
  * Methods
  */
-StageSchema.method({});
+PriceSchema.method({});
 
 /**
  * Statics
  */
-StageSchema.statics = {
+PriceSchema.statics = {
   /**
    * Get user
    * @param {ObjectId} id - The objectId of user.
@@ -75,6 +78,6 @@ StageSchema.statics = {
 };
 
 /**
- * @typedef Stage
+ * @typedef Price
  */
-module.exports = mongoose.model("Stage", StageSchema);
+module.exports = mongoose.model("Price", PriceSchema);

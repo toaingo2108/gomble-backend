@@ -15,9 +15,15 @@ const TechpackSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
+  stage: {
+    type: String,
+  },
   is_draft: {
     type: Boolean,
     default: true,
+  },
+  price: {
+    type: String,
   },
   createdAt: {
     type: Date,
