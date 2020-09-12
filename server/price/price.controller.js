@@ -2,13 +2,13 @@ const Price = require("./price.model");
 const Techpack = require("../techpack/techpack.model");
 
 async function getPrice(req, res) {
-  const _id = req.decoded._id;
+  const techpack_id = req.body.techpack_id;
 
   try {
-    var folders = await Folder.find({ user_id: _id });
+    var price = await Price.findOne({ techpack_id });
     return res.status(200).json({
       success: true,
-      res: folders,
+      res: price,
     });
   } catch (err) {
     return res.status(500).json({ success: false, message: `err: ${err}` });

@@ -11,6 +11,9 @@ const TechpackSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     required: true,
   },
+  generalinfo: {
+    type: String,
+  },
   sketches: {
     type: Array,
     default: [],
