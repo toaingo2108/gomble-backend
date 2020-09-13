@@ -12,21 +12,24 @@ const TechpackSchema = new mongoose.Schema({
     required: true,
   },
   generalinfo: {
-    type: String,
+    type: mongoose.Schema.ObjectId,
   },
   sketches: {
     type: Array,
     default: [],
   },
   stage: {
-    type: String,
+    type: mongoose.Schema.ObjectId,
   },
   is_draft: {
     type: Boolean,
     default: true,
   },
   price: {
-    type: String,
+    type: mongoose.Schema.ObjectId,
+  },
+  designer: {
+    type: mongoose.Schema.ObjectId,
   },
   createdAt: {
     type: Date,

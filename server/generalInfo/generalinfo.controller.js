@@ -5,15 +5,16 @@ const fs = require("fs");
 const isEmpty = require("is-empty");
 
 async function getGeneralInfo(req, res) {
-  const _id = req.decoded._id;
+  const techpack_id = req.body.techpack_id;
 
   try {
-    var folders = await Folder.find({ user_id: _id });
+    var generalinfo = await GeneralInfo.findOne({ techpack_id });
     return res.status(200).json({
       success: true,
-      res: folders,
+      res: generalinfo,
     });
   } catch (err) {
+    console.log(`${err}`);
     return res.status(500).json({ success: false, message: `err: ${err}` });
   }
 }
@@ -22,7 +23,7 @@ async function updateGeneralInfo(req, res) {
   const techpack_id = req.body.techpack_id;
   const title = req.body.title;
   var tagArr = [];
-  if (req.body.tags) tagArr = req.body.tags.split(",");
+  if (req.body.tags) tagArr = req.body.tags.toLowerCase().split(",");
   const description = req.body.description;
 
   if (!techpack_id) {

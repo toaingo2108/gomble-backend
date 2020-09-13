@@ -11,7 +11,7 @@ const GeneralInfoSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     required: true,
   },
-  images: {
+  image: {
     type: String,
   },
   title: {

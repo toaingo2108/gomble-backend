@@ -78,13 +78,13 @@ app.use((req, res, next) => {
 });
 
 // log error in winston transports except when executing test suite
-if (config.env !== "test") {
-  app.use(
-    expressWinston.errorLogger({
-      winstonInstance,
-    })
-  );
-}
+// if (config.env !== "test") {
+//   app.use(
+//     expressWinston.errorLogger({
+//       winstonInstance,
+//     })
+//   );
+// }
 
 // error handler, send stacktrace only during development
 app.use((
