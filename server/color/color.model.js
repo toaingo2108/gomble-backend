@@ -4,12 +4,15 @@ const httpStatus = require("http-status");
 const APIError = require("../helpers/APIError");
 
 /**
- * Techpack Schema
+ * Color Schema
  */
-const TechpackSchema = new mongoose.Schema({
-  name: {
+const ColorSchema = new mongoose.Schema({
+  code: {
     type: String,
     required: true,
+  },
+  description: {
+    type: String,
   },
   createdAt: {
     type: Date,
@@ -27,12 +30,12 @@ const TechpackSchema = new mongoose.Schema({
 /**
  * Methods
  */
-TechpackSchema.method({});
+ColorSchema.method({});
 
 /**
  * Statics
  */
-TechpackSchema.statics = {
+ColorSchema.statics = {
   /**
    * Get user
    * @param {ObjectId} id - The objectId of user.
@@ -66,6 +69,6 @@ TechpackSchema.statics = {
 };
 
 /**
- * @typedef Techpack
+ * @typedef Color
  */
-module.exports = mongoose.model("Techpack", TechpackSchema);
+module.exports = mongoose.model("Color", ColorSchema);

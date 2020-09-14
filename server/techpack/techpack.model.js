@@ -18,6 +18,10 @@ const TechpackSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
+  materials: {
+    type: Array,
+    default: [],
+  },
   stage: {
     type: mongoose.Schema.ObjectId,
   },

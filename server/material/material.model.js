@@ -24,6 +24,35 @@ const MaterialSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
+  colors: {
+    type: Array,
+    default: [],
+  },
+  quantity: {
+    type: Number,
+  },
+  price_per_item: {
+    type: Number,
+  },
+  price_total: {
+    type: Number,
+  },
+  factory_name: {
+    type: Number,
+  },
+  factory_email: {
+    type: Number,
+  },
+  factory_phone: {
+    type: Number,
+  },
+  factory_information: {
+    type: Number,
+  },
+  is_draft: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 /**
