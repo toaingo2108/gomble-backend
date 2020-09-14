@@ -1,4 +1,5 @@
 const Techpack = require("./techpack.model");
+const Folder = require("../folder/folder.model");
 const mongoose = require("mongoose");
 
 async function getTechpacks(req, res) {
@@ -161,6 +162,10 @@ async function publish(req, res) {
     }
     techpack.is_draft = false;
     await techpack.save();
+    var folder = await Folder.findOne({ _id: techpack.folder_id });
+    folder.items.push(techpack._id);
+    await folder.save();
+
     return res.status(200).json({
       success: true,
       res: techpack._id,

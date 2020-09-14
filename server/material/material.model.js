@@ -38,16 +38,16 @@ const MaterialSchema = new mongoose.Schema({
     type: Number,
   },
   factory_name: {
-    type: Number,
+    type: String,
   },
   factory_email: {
-    type: Number,
+    type: String,
   },
   factory_phone: {
-    type: Number,
+    type: String,
   },
   factory_information: {
-    type: Number,
+    type: String,
   },
   is_draft: {
     type: Boolean,

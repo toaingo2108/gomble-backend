@@ -3,12 +3,31 @@ const Techpack = require("../techpack/techpack.model");
 const path = require("path");
 const fs = require("fs");
 const isEmpty = require("is-empty");
+const mongoose = require("mongoose");
 
 async function getMaterials(req, res) {
   const techpack_id = req.body.techpack_id;
 
   try {
-    var materials = await Material.find({ techpack_id });
+    query = [
+      {
+        $match: {
+          $and: [
+            { techpack_id: mongoose.Types.ObjectId(techpack_id) },
+            { is_draft: false },
+          ],
+        },
+      },
+      {
+        $lookup: {
+          from: "colors",
+          localField: "colors",
+          foreignField: "_id",
+          as: "colors",
+        },
+      },
+    ];
+    var materials = await Material.aggregate(query);
     return res.status(200).json({
       success: true,
       res: materials,
@@ -82,14 +101,14 @@ async function addMaterial(req, res) {
     material.title = title;
     material.description = description;
     material.tags = tagArr;
-    material.placement = placement;
-    material.quantity = quantity;
-    material.price_per_item = price_per_item;
-    material.price_total = price_total;
-    material.factory_name = factory_name;
-    material.factory_email = factory_email;
-    material.factory_phone = factory_phone;
-    material.factory_information = factory_information;
+    material.placement = req.body.placement;
+    material.quantity = req.body.quantity;
+    material.price_per_item = req.body.price_per_item;
+    material.price_total = req.body.price_total;
+    material.factory_name = req.body.factory_name;
+    material.factory_email = req.body.factory_email;
+    material.factory_phone = req.body.factory_phone;
+    material.factory_information = req.body.factory_information;
     material.is_draft = false;
 
     material = await material.save();

@@ -1,14 +1,33 @@
 const Color = require("./color.model");
 const Material = require("../material/material.model");
+const mongoose = require("mongoose");
 
 async function getColors(req, res) {
-  const _id = req.decoded._id;
+  const _id = req.body.material_id;
 
   try {
-    var folders = await Folder.find({ user_id: _id });
+    query = [
+      {
+        $match: { _id: mongoose.Types.ObjectId(_id) },
+      },
+      {
+        $lookup: {
+          from: "colors",
+          localField: "colors",
+          foreignField: "_id",
+          as: "color_list",
+        },
+      },
+      {
+        $project: {
+          color_list: "$color_list",
+        },
+      },
+    ];
+    var material = await Material.aggregate(query);
     return res.status(200).json({
       success: true,
-      res: folders,
+      res: material,
     });
   } catch (err) {
     return res.status(500).json({ success: false, message: `err: ${err}` });
@@ -17,7 +36,7 @@ async function getColors(req, res) {
 
 async function addColor(req, res) {
   const material_id = req.body.material_id;
-  const code = req.body.color_code;
+  const code = req.body.code;
   const description = req.body.description;
 
   if (!material_id) {
