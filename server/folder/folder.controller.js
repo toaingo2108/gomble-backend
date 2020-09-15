@@ -24,7 +24,7 @@ async function createFolder(req, res) {
     });
   }
   try {
-    var folder = await Folder.findOne({ name });
+    var folder = await Folder.findOne({ name, user_id });
     if (folder) {
       return res.status(400).json({
         success: false,
