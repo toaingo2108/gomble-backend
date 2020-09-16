@@ -4,68 +4,24 @@ const httpStatus = require("http-status");
 const APIError = require("../helpers/APIError");
 
 /**
- * User Schema
+ * Order Schema
  */
-const UserSchema = new mongoose.Schema({
-  email: {
-    type: String,
+const OrderSchema = new mongoose.Schema({
+  user_id: {
+    type: mongoose.Schema.ObjectId,
     required: true,
   },
-  password: {
-    type: String,
-    required: true,
+  available: {
+    type: Number,
+    default: 0,
   },
-  type: {
-    type: String,
-    default: "-",
+  withdrawn: {
+    type: Number,
+    default: 0,
   },
-  is_facebook: Boolean,
-  is_apple: Boolean,
-  image: String,
-  nickname: {
-    type: String,
-  },
-  first_name: {
-    type: String,
-  },
-  last_name: {
-    type: String,
-  },
-  street: {
-    type: String,
-  },
-  street_number: {
-    type: String,
-  },
-  apt: {
-    type: String,
-  },
-  city: {
-    type: String,
-  },
-  state: {
-    type: String,
-  },
-  zip: {
-    type: String,
-  },
-  phone: {
-    type: String,
-  },
-  website: {
-    type: String,
-  },
-  company: {
-    type: String,
-  },
-  fax: {
-    type: String,
-  },
-  description: {
-    type: String,
-  },
-  payment_customer_id: {
-    type: String,
+  pending: {
+    type: Number,
+    default: 0,
   },
   createdAt: {
     type: Date,
@@ -83,12 +39,12 @@ const UserSchema = new mongoose.Schema({
 /**
  * Methods
  */
-UserSchema.method({});
+OrderSchema.method({});
 
 /**
  * Statics
  */
-UserSchema.statics = {
+OrderSchema.statics = {
   /**
    * Get user
    * @param {ObjectId} id - The objectId of user.
@@ -122,6 +78,6 @@ UserSchema.statics = {
 };
 
 /**
- * @typedef User
+ * @typedef Order
  */
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model("Order", OrderSchema);

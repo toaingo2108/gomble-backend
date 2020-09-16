@@ -4,72 +4,38 @@ const httpStatus = require("http-status");
 const APIError = require("../helpers/APIError");
 
 /**
- * User Schema
+ * Order Schema
  */
-const UserSchema = new mongoose.Schema({
-  email: {
-    type: String,
+const OrderSchema = new mongoose.Schema({
+  techpack_id: {
+    type: mongoose.Schema.ObjectId,
     required: true,
   },
-  password: {
-    type: String,
+  transaction: {
+    type: Object,
+  },
+  buyer: {
+    type: mongoose.Schema.ObjectId,
     required: true,
   },
-  type: {
-    type: String,
-    default: "-",
+  seller: {
+    type: mongoose.Schema.ObjectId,
   },
-  is_facebook: Boolean,
-  is_apple: Boolean,
-  image: String,
-  nickname: {
-    type: String,
+  price: {
+    type: Number,
+    default: 0,
   },
-  first_name: {
-    type: String,
-  },
-  last_name: {
-    type: String,
-  },
-  street: {
-    type: String,
-  },
-  street_number: {
-    type: String,
-  },
-  apt: {
-    type: String,
-  },
-  city: {
-    type: String,
-  },
-  state: {
-    type: String,
-  },
-  zip: {
-    type: String,
-  },
-  phone: {
-    type: String,
-  },
-  website: {
-    type: String,
-  },
-  company: {
-    type: String,
-  },
-  fax: {
-    type: String,
-  },
-  description: {
-    type: String,
-  },
-  payment_customer_id: {
-    type: String,
-  },
-  createdAt: {
+  date: {
     type: Date,
     default: Date.now,
+  },
+  delivery_state: {
+    type: String,
+    default: "none",
+  },
+  paid_state: {
+    type: String,
+    default: "none",
   },
 });
 
@@ -83,12 +49,12 @@ const UserSchema = new mongoose.Schema({
 /**
  * Methods
  */
-UserSchema.method({});
+OrderSchema.method({});
 
 /**
  * Statics
  */
-UserSchema.statics = {
+OrderSchema.statics = {
   /**
    * Get user
    * @param {ObjectId} id - The objectId of user.
@@ -122,6 +88,6 @@ UserSchema.statics = {
 };
 
 /**
- * @typedef User
+ * @typedef Order
  */
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model("Order", OrderSchema);
