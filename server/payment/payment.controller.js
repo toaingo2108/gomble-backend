@@ -2,6 +2,7 @@ var braintree = require("braintree");
 const User = require("../user/user.model");
 const Order = require("./order.model");
 const Techpack = require("../techpack/techpack.model");
+const mongoose = require("mongoose");
 
 var gateway = new braintree.BraintreeGateway({
   environment: braintree.Environment.Sandbox,
@@ -105,5 +106,88 @@ async function checkouts(req, res) {
     return res.status(500).json({ success: false, message: `err: ${err}` });
   }
 }
+async function getOrders(req, res) {
+  const _id = req.decoded._id;
+  try {
+    var user = await User.findOne({ _id });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+      });
+    }
 
-module.exports = { generateClientToken, checkouts };
+    query = [];
+    if (user.type == "designer") {
+      query.push({
+        $match: { seller: mongoose.Types.ObjectId(_id) },
+      });
+    } else {
+      query.push({
+        $match: { buyer: mongoose.Types.ObjectId(_id) },
+      });
+    }
+    query.push(
+      {
+        $lookup: {
+          from: "techpacks",
+          localField: "techpack_id",
+          foreignField: "_id",
+          as: "techpack",
+        },
+      },
+      {
+        $set: {
+          techpack: { $arrayElemAt: ["$techpack.generalinfo", 0] },
+        },
+      },
+      {
+        $lookup: {
+          from: "generalinfos",
+          localField: "techpack",
+          foreignField: "_id",
+          as: "techpack",
+        },
+      },
+      {
+        $set: {
+          techpack: { $arrayElemAt: ["$techpack", 0] },
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "seller",
+          foreignField: "_id",
+          as: "seller",
+        },
+      },
+      {
+        $set: {
+          seller: { $arrayElemAt: ["$seller", 0] },
+        },
+      },
+      {
+        $project: {
+          _id: "$_id",
+          techpack_title: "$techpack.title",
+          image: "$techpack.image",
+          price: "$price",
+          delivery_state: "$delivery_state",
+          paid_state: "$paid_state",
+          seller_first_name: "$seller.first_name",
+          seller_last_name: "$seller.last_name",
+          buyer: "$buyer",
+        },
+      }
+    );
+    var orders = await Order.aggregate(query);
+    return res.status(200).json({
+      success: true,
+      res: orders,
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: `err: ${err}` });
+  }
+}
+module.exports = { generateClientToken, checkouts, getOrders };

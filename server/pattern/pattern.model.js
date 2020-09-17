@@ -4,56 +4,21 @@ const httpStatus = require("http-status");
 const APIError = require("../helpers/APIError");
 
 /**
- * Techpack Schema
+ * Pattern Schema
  */
-const TechpackSchema = new mongoose.Schema({
-  folder_id: {
+const PatternSchema = new mongoose.Schema({
+  techpack_id: {
     type: mongoose.Schema.ObjectId,
     required: true,
   },
-  generalinfo: {
-    type: mongoose.Schema.ObjectId,
-  },
-  sketches: {
-    type: Array,
-    default: [],
-  },
-  materials: {
-    type: Array,
-    default: [],
-  },
-  measurements: {
-    type: Array,
-    default: [],
-  },
-  measurement_unit: {
+  image: {
     type: String,
-    defaults: "inch",
   },
-  measurement_size_range: {
-    type: Array,
-    default: [],
+  title: {
+    type: String,
   },
-  patterns: {
-    type: Array,
-    default: [],
-  },
-  stage: {
-    type: mongoose.Schema.ObjectId,
-  },
-  is_draft: {
-    type: Boolean,
-    default: true,
-  },
-  price: {
-    type: mongoose.Schema.ObjectId,
-  },
-  designer: {
-    type: mongoose.Schema.ObjectId,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+  description: {
+    type: String,
   },
 });
 
@@ -67,12 +32,12 @@ const TechpackSchema = new mongoose.Schema({
 /**
  * Methods
  */
-TechpackSchema.method({});
+PatternSchema.method({});
 
 /**
  * Statics
  */
-TechpackSchema.statics = {
+PatternSchema.statics = {
   /**
    * Get user
    * @param {ObjectId} id - The objectId of user.
@@ -106,6 +71,6 @@ TechpackSchema.statics = {
 };
 
 /**
- * @typedef Techpack
+ * @typedef Pattern
  */
-module.exports = mongoose.model("Techpack", TechpackSchema);
+module.exports = mongoose.model("Pattern", PatternSchema);
