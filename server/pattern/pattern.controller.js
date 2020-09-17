@@ -22,8 +22,6 @@ async function addPattern(req, res) {
   const techpack_id = req.body.techpack_id;
   console.log(techpack_id);
   const title = req.body.title;
-  var tagArr = [];
-  if (req.body.tags) tagArr = req.body.tags.split(",");
   const description = req.body.description;
 
   if (!techpack_id) {
@@ -52,7 +50,6 @@ async function addPattern(req, res) {
     var pattern = new Pattern({
       techpack_id,
       title,
-      tags: tagArr,
       description,
     });
     pattern = await pattern.save();
