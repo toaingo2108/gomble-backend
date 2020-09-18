@@ -38,6 +38,10 @@ const TechpackSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
+  readytowear: {
+    type: Array,
+    default: [],
+  },
   stage: {
     type: mongoose.Schema.ObjectId,
   },
@@ -46,6 +50,9 @@ const TechpackSchema = new mongoose.Schema({
     default: true,
   },
   price: {
+    type: mongoose.Schema.ObjectId,
+  },
+  factory: {
     type: mongoose.Schema.ObjectId,
   },
   designer: {
