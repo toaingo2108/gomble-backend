@@ -1,6 +1,15 @@
 const Techpack = require("./techpack.model");
 const Folder = require("../folder/folder.model");
 const mongoose = require("mongoose");
+const GeneralInfo = require("../generalinfo/generalinfo.model");
+const stageModel = require("../stage/stage.model");
+const sketchModel = require("../sketch/sketch.model");
+const materialModel = require("../material/material.model");
+const measurementModel = require("../measurement/measurement.model");
+const patternModel = require("../pattern/pattern.model");
+const factoryModel = require("../factory/factory.model");
+const priceModel = require("../price/price.model");
+const readytowearModel = require("../readytowear/readytowear.model");
 
 async function getTechpacks(req, res) {
   const folder_id = req.body.folder_id;
@@ -240,6 +249,15 @@ async function deleteTechpack(req, res) {
       });
     }
     await techpack.delete();
+    await GeneralInfo.deleteOne({ techpack_id: _id });
+    await stageModel.deleteOne({ techpack_id: _id });
+    await sketchModel.deleteMany({ techpack_id: _id });
+    await materialModel.deleteMany({ techpack_id: _id });
+    await measurementModel.deleteMany({ techpack_id: _id });
+    await patternModel.deleteMany({ techpack_id: _id });
+    await factoryModel.deleteMany({ techpack_id: _id });
+    await priceModel.deleteMany({ techpack_id: _id });
+    await readytowearModel.deleteMany({ techpack_id: _id });
 
     return res.status(200).json({
       success: true,

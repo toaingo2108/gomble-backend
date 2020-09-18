@@ -17,9 +17,6 @@ const GeneralInfoSchema = new mongoose.Schema({
   title: {
     type: String,
   },
-  placement: {
-    type: String,
-  },
   description: {
     type: String,
   },
