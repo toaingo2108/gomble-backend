@@ -9,10 +9,17 @@ async function getGeneralInfo(req, res) {
 
   try {
     var generalinfo = await GeneralInfo.findOne({ techpack_id });
-    return res.status(200).json({
-      success: true,
-      res: generalinfo,
-    });
+    if (generalinfo) {
+      return res.status(200).json({
+        success: true,
+        res: generalinfo,
+      });
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: "generalinfo not found",
+      });
+    }
   } catch (err) {
     console.log(`${err}`);
     return res.status(500).json({ success: false, message: `err: ${err}` });
