@@ -2,10 +2,10 @@ const Stage = require("./stage.model");
 const Techpack = require("../techpack/techpack.model");
 
 async function getStage(req, res) {
-  const _id = req.decoded._id;
+  const techpack_id = req.body.techpack_id;
 
   try {
-    var stage = await Stage.findOne({ user_id: _id });
+    var stage = await Stage.findOne({ techpack_id });
     return res.status(200).json({
       success: true,
       res: stage,
