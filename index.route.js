@@ -12,6 +12,8 @@ const materialRoutes = require("./server/material/material.route");
 const colorRoutes = require("./server/color/color.route");
 const paymentRoutes = require("./server/payment/payment.route");
 const patternRoutes = require("./server/pattern/pattern.route");
+const measurementRoutes = require("./server/measurement/measurement.route");
+const readyToWearRoutes = require("./server/readytowear/readytowear.route");
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -32,8 +34,10 @@ router.use("/generalinfo", generalinfoRoutes);
 router.use("/sketch", sketchRoutes);
 router.use("/price", priceRoutes);
 router.use("/material", materialRoutes);
+router.use("/measurement", measurementRoutes);
 router.use("/pattern", patternRoutes);
 router.use("/color", colorRoutes);
+router.use("/readytowear", readyToWearRoutes);
 router.use("/payment", paymentRoutes);
 
 module.exports = router;
