@@ -223,10 +223,38 @@ async function getDesignerProfile(req, res) {
   }
 }
 
+async function deleteTechpack(req, res) {
+  const _id = req.body.techpack_id;
+  if (!_id) {
+    return res.status(400).json({
+      success: false,
+      message: "techpack id is required",
+    });
+  }
+  try {
+    var techpack = await Techpack.findOne({ _id });
+    if (!techpack) {
+      return res.status(400).json({
+        success: true,
+        message: "techpack not found",
+      });
+    }
+    await techpack.delete();
+
+    return res.status(200).json({
+      success: true,
+      message: "techpack deleted successfully",
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: `err: ${err}` });
+  }
+}
+
 module.exports = {
   getTechpacks,
   getDraft,
   publish,
   getDesignerProfile,
   getProducts,
+  deleteTechpack,
 };

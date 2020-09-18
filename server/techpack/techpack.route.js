@@ -8,5 +8,6 @@ router.route("/publish").post(techpackCtrl.publish);
 router.route("/designer").post(techpackCtrl.getDesignerProfile);
 router.route("/").post(techpackCtrl.getTechpacks);
 router.route("/products").post(techpackCtrl.getProducts);
+router.route("/delete").post(techpackCtrl.deleteTechpack);
 
 module.exports = router;
