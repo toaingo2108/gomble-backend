@@ -16,9 +16,6 @@ mongoose.Promise = Promise;
 // connect to mongo db
 const mongoUri = config.mongo.host;
 mongoose.connect(mongoUri, {
-  server: {
-    socketOptions: { keepAlive: 1 },
-  },
   useUnifiedTopology: true,
   useNewUrlParser: true,
 });
