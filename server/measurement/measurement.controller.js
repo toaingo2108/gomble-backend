@@ -184,4 +184,4 @@ fileMeasurementImageUpload = (measurement_id, photo) => {
     filename,
   };
 };
-module.exports = { getMeasurements, addMeasurement };
+module.exports = { getMeasurements, addMeasurement, updateBasicInfo };
