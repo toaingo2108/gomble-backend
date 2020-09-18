@@ -73,7 +73,8 @@ async function getTechpacks(req, res) {
   }
 }
 async function getProducts(req, res) {
-  const folder_id = req.body.folder_id;
+  var search_key = req.body.search_key;
+  if (!search_key) search_key = "";
   try {
     query = [
       {
@@ -108,6 +109,11 @@ async function getProducts(req, res) {
           image: "$generalinfo_details.image",
           tags: "$generalinfo_details.tags",
           price_total: "$price_details.total",
+        },
+      },
+      {
+        $match: {
+          title: { $regex: search_key, $options: "i" },
         },
       },
     ];
