@@ -5,10 +5,10 @@ async function getStage(req, res) {
   const _id = req.decoded._id;
 
   try {
-    var folders = await Folder.find({ user_id: _id });
+    var stage = await Stage.findOne({ user_id: _id });
     return res.status(200).json({
       success: true,
-      res: folders,
+      res: stage,
     });
   } catch (err) {
     return res.status(500).json({ success: false, message: `err: ${err}` });
