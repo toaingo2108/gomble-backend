@@ -132,6 +132,38 @@ async function updateBasicInfo(req, res) {
   }
 }
 
+async function getBasicInfo(req, res) {
+  const techpack_id = req.body.techpack_id;
+  if (!techpack_id) {
+    return res.status(400).json({
+      success: false,
+      message: "techpack id is required",
+    });
+  }
+
+  try {
+    var techpack = await Techpack.findOne({ _id: techpack_id });
+
+    if (!techpack) {
+      return res.status(400).json({
+        success: false,
+        message: "Techpack not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      res: {
+        unit: techpack.measurement_unit,
+        size_range: techpack.measurement_size_range,
+      },
+    });
+  } catch (err) {
+    console.log(`${err}`);
+    return res.status(500).json({ success: false, message: `err: ${err}` });
+  }
+}
+
 fileMeasurementImageUpload = (measurement_id, photo) => {
   const ext = path.extname(photo.name);
   const filename = measurement_id + ext;
@@ -184,4 +216,9 @@ fileMeasurementImageUpload = (measurement_id, photo) => {
     filename,
   };
 };
-module.exports = { getMeasurements, addMeasurement, updateBasicInfo };
+module.exports = {
+  getMeasurements,
+  addMeasurement,
+  updateBasicInfo,
+  getBasicInfo,
+};
