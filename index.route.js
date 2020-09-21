@@ -15,6 +15,7 @@ const patternRoutes = require("./server/pattern/pattern.route");
 const measurementRoutes = require("./server/measurement/measurement.route");
 const readyToWearRoutes = require("./server/readytowear/readytowear.route");
 const factoryRoutes = require("./server/factory/factory.route");
+const collaborationRoutes = require("./server/collaboration/collaboration.route");
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -41,5 +42,6 @@ router.use("/color", colorRoutes);
 router.use("/readytowear", readyToWearRoutes);
 router.use("/payment", paymentRoutes);
 router.use("/factory", factoryRoutes);
+router.use("/collaboration", collaborationRoutes);
 
 module.exports = router;

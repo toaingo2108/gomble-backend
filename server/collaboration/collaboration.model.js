@@ -4,63 +4,26 @@ const httpStatus = require("http-status");
 const APIError = require("../helpers/APIError");
 
 /**
- * Techpack Schema
+ * Collaboration Schema
  */
-const TechpackSchema = new mongoose.Schema({
-  folder_id: {
+const CollaborationSchema = new mongoose.Schema({
+  techpack_id: {
     type: mongoose.Schema.ObjectId,
     required: true,
   },
-  collaboration: {
-    type: Array,
-    default: [],
-  },
-  generalinfo: {
-    type: mongoose.Schema.ObjectId,
-  },
-  sketches: {
-    type: Array,
-    default: [],
-  },
-  materials: {
-    type: Array,
-    default: [],
-  },
-  measurements: {
-    type: Array,
-    default: [],
-  },
-  measurement_unit: {
+  name: {
     type: String,
-    defaults: "inch",
+    required: true,
   },
-  measurement_size_range: {
-    type: Array,
-    default: [],
+  email: {
+    type: String,
+    required: true,
   },
-  patterns: {
-    type: Array,
-    default: [],
+  phone: {
+    type: String,
   },
-  readytowear: {
-    type: Array,
-    default: [],
-  },
-  stage: {
-    type: mongoose.Schema.ObjectId,
-  },
-  is_draft: {
-    type: Boolean,
-    default: true,
-  },
-  price: {
-    type: mongoose.Schema.ObjectId,
-  },
-  factory: {
-    type: mongoose.Schema.ObjectId,
-  },
-  designer: {
-    type: mongoose.Schema.ObjectId,
+  information: {
+    type: String,
   },
   createdAt: {
     type: Date,
@@ -78,12 +41,12 @@ const TechpackSchema = new mongoose.Schema({
 /**
  * Methods
  */
-TechpackSchema.method({});
+CollaborationSchema.method({});
 
 /**
  * Statics
  */
-TechpackSchema.statics = {
+CollaborationSchema.statics = {
   /**
    * Get user
    * @param {ObjectId} id - The objectId of user.
@@ -117,6 +80,6 @@ TechpackSchema.statics = {
 };
 
 /**
- * @typedef Techpack
+ * @typedef Collaboration
  */
-module.exports = mongoose.model("Techpack", TechpackSchema);
+module.exports = mongoose.model("Collaboration", CollaborationSchema);
